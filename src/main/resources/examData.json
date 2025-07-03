@@ -1,0 +1,252 @@
+[
+  {
+    "examName": "토익",
+    "description": "영어 능력 평가 시험",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "토플",
+    "description": "영어 능력 평가 시험 (미국 대학 진학용)",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "텝스",
+    "description": "서울대 주관 영어 능력 시험",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "IELTS",
+    "description": "영국 연방 국가 대학 진학용 영어 시험",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "정보처리기사",
+    "description": "IT 개발 및 시스템 이해 능력을 평가",
+    "category": "IT"
+  },
+  {
+    "examName": "정보보안기사",
+    "description": "정보 보안 관련 실무 능력 평가",
+    "category": "IT"
+  },
+  {
+    "examName": "컴퓨터활용능력 1급",
+    "description": "엑셀·엑세스 실무 활용 능력 검정",
+    "category": "IT"
+  },
+  {
+    "examName": "컴퓨터활용능력 2급",
+    "description": "컴퓨터 활용 기초 능력 검정",
+    "category": "IT"
+  },
+  {
+    "examName": "SQLD",
+    "description": "데이터베이스 응용 능력 평가",
+    "category": "IT"
+  },
+  {
+    "examName": "ADSP",
+    "description": "데이터 분석 준전문가 자격 시험",
+    "category": "IT"
+  },
+  {
+    "examName": "빅데이터분석기사",
+    "description": "빅데이터 분석 실무 능력 자격증",
+    "category": "IT"
+  },
+  {
+    "examName": "정보처리산업기사",
+    "description": "정보처리 기초 실무 자격",
+    "category": "IT"
+  },
+  {
+    "examName": "리눅스마스터",
+    "description": "리눅스 서버 운영 능력 검정",
+    "category": "IT"
+  },
+  {
+    "examName": "CCNA",
+    "description": "시스코 네트워크 기초 자격",
+    "category": "IT"
+  },
+  {
+    "examName": "OCJP",
+    "description": "Java 언어 기반 오라클 자격",
+    "category": "IT"
+  },
+  {
+    "examName": "AWS 공인클라우드실무자",
+    "description": "AWS 기반 클라우드 이해와 활용 능력",
+    "category": "IT"
+  },
+  {
+    "examName": "자바 웹 개발자 인증",
+    "description": "자바 기반 웹 개발 실무 인증",
+    "category": "IT"
+  },
+  {
+    "examName": "PMP",
+    "description": "프로젝트 관리 전문가 자격",
+    "category": "BUSINESS"
+  },
+  {
+    "examName": "MOS",
+    "description": "마이크로소프트 오피스 자격",
+    "category": "IT"
+  },
+  {
+    "examName": "GTQ",
+    "description": "그래픽 기술 자격",
+    "category": "IT"
+  },
+  {
+    "examName": "CAD기초",
+    "description": "컴퓨터 도면 설계 기초 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "건축기사",
+    "description": "건축 관련 전문 기술 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "전기기사",
+    "description": "전기 설비 설계 및 시공 능력 검정",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "기계설계기사",
+    "description": "기계 설계 및 제작 능력 검정",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "토목기사",
+    "description": "토목 설계 및 시공 기술 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "운전면허 1종 보통",
+    "description": "자동차 일반 도로 주행 능력",
+    "category": "LICENSE"
+  },
+  {
+    "examName": "운전면허 2종 보통",
+    "description": "자동차 초급 주행 능력",
+    "category": "LICENSE"
+  },
+  {
+    "examName": "한국사능력검정시험",
+    "description": "한국사 이해 및 해석 능력 평가",
+    "category": "HISTORY"
+  },
+  {
+    "examName": "JLPT N1",
+    "description": "일본어 능력 평가 (최상급)",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "JLPT N2",
+    "description": "일본어 능력 평가 (고급)",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "HSK 6급",
+    "description": "중국어 능력 시험 (최상급)",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "HSK 5급",
+    "description": "중국어 능력 시험 (고급)",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "OPIc AL",
+    "description": "영어 말하기 능력 최고 등급",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "OPIc IH",
+    "description": "영어 말하기 능력 고급 등급",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "토스 Lv8",
+    "description": "토익스피킹 최고 등급",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "토스 Lv7",
+    "description": "토익스피킹 상위 등급",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "CS Leaders",
+    "description": "고객서비스 전문가 자격",
+    "category": "BUSINESS"
+  },
+  {
+    "examName": "ERP 정보관리사",
+    "description": "기업 회계 및 자원 관리 능력 검정",
+    "category": "BUSINESS"
+  },
+  {
+    "examName": "무역영어 1급",
+    "description": "국제 무역 실무 영어 능력",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "무역영어 2급",
+    "description": "기초 무역 영어 실무 능력",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "한자능력검정시험 1급",
+    "description": "한자 활용 능력 최고 수준",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "한자능력검정시험 2급",
+    "description": "한자 활용 능력 고급",
+    "category": "LANGUAGE"
+  },
+  {
+    "examName": "전산세무 1급",
+    "description": "기업 세무 회계 처리 능력",
+    "category": "IT"
+  },
+  {
+    "examName": "전산회계 2급",
+    "description": "기초 회계 업무 수행 능력",
+    "category": "IT"
+  },
+  {
+    "examName": "사회조사분석사 2급",
+    "description": "사회조사 설계 및 통계 해석 자격",
+    "category": "STATISTICS"
+  },
+  {
+    "examName": "소방설비기사",
+    "description": "소방 설비 설치 및 유지관리 기술",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "전기공사기사",
+    "description": "전기공사 시공 및 감리 기술 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "건설안전기사",
+    "description": "건설현장 안전 관리 전문 기술 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "산업안전기사",
+    "description": "산업현장 안전 관리 전문가 자격",
+    "category": "ENGINEERING"
+  },
+  {
+    "examName": "공조냉동기계기사",
+    "description": "냉동 공조 설비 기술 평가",
+    "category": "ENGINEERING"
+  }
+]
