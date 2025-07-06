@@ -1,6 +1,19 @@
 package com.example.demo.domain.comment.service.command;
 
-public class CommentCommandServiceImpl {
+import com.example.demo.domain.comment.converter.CommentConverter;
+import com.example.demo.domain.comment.dto.CommentRequestDto.CommentRequestDto;
+import com.example.demo.domain.comment.entity.Comment;
+import com.example.demo.domain.comment.exception.CommentErrorCode;
+import com.example.demo.domain.comment.repository.CommentRepository;
+import com.example.demo.domain.post.entity.Post;
+import com.example.demo.domain.post.repository.PostRepository;
+import com.example.demo.domain.user.entity.User;
+import com.example.demo.domain.user.repository.UserRepository;
+import com.example.demo.global.apiPayload.exception.CustomException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
