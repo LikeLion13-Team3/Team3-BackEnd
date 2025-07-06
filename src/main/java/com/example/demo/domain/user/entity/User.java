@@ -75,4 +75,7 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<UserProblem> userProblems = new ArrayList<>();
 
+    public String getLoginId() {
+        return loginId;
+    }
 }
