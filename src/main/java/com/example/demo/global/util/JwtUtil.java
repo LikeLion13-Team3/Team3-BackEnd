@@ -25,12 +25,12 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    // ✅ Access Token 생성
+    // Access Token 생성
     public String createAccessToken(String loginId) {
         return createToken(loginId, ACCESS_TOKEN_VALIDITY);
     }
 
-    // ✅ Refresh Token 생성
+    // Refresh Token 생성
     public String createRefreshToken(String loginId) {
         return createToken(loginId, REFRESH_TOKEN_VALIDITY);
     }
@@ -47,7 +47,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ 토큰에서 loginId 추출
+    // 토큰에서 loginId 추출
     public String getLoginId(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -57,7 +57,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    // ✅ 토큰 유효성 검증
+    // 토큰 유효성 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
