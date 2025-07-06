@@ -36,4 +36,14 @@ public class CommunityController {
         return ResponseEntity.ok(new ApiResponse<>("success", "커뮤니티에 참여하였습니다.", response));
     }
 
+    @Operation(summary = "내가 참여한 커뮤니티 목록 조회", description = "유저가 참여한 커뮤니티 목록 조회")
+    @GetMapping("/users/me/communities")
+    public ResponseEntity<ApiResponse<List<CommunityResponseDto.CommunitySimpleResponseDto>>> getMyCommunities(
+            @RequestHeader("Authorization") String token
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        List<UserCommunity> userCommunities = queryService.getMyCommunities(loginId);
+        List<CommunityResponseDto.CommunitySimpleResponseDto> result = CommunityConverter.toDtoList(userCommunities);
+        return ResponseEntity.ok(new ApiResponse<>("success", "참여한 커뮤니티 목록입니다.", result));
+    }
 }
