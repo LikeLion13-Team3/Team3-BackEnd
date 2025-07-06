@@ -10,6 +10,7 @@ import com.example.demo.global.BaseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,38 @@ public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // pk
 
-    private String username;
-
-    private String email;
-
+    private String loginId;  // 로그인 ID
     private String password;
+    private String username;
+    private String nickname;
+
+    private String profileImageUrl;
+
+
+    private Boolean isDeleted;
+
+
+    @Builder
+    public User(String loginId, String password, String username, String nickname) {
+        this.loginId = loginId;
+        this.password = password;
+        this.username = username;
+        this.nickname = nickname;
+        this.profileImageUrl = null;
+        this.isDeleted = false;
+    }
+
+
+    public void updateProfile(String nickname, String imageUrl) {
+        this.nickname = nickname;
+        this.profileImageUrl = imageUrl;
+    }
+
+    public void deleteUser() {
+        this.isDeleted = true;
+    }
 
     @OneToMany(mappedBy = "user")
     private List<UserCommunity> userCommunities = new ArrayList<>();
@@ -48,4 +74,5 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<UserProblem> userProblems = new ArrayList<>();
+
 }
