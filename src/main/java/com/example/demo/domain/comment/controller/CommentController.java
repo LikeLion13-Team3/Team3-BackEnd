@@ -52,4 +52,14 @@ public class CommentController {
         return ApiResponse.onSuccess("댓글 목록입니다.", commentQueryService.getCommentsByPostId(postId));
     }
 
+    @Operation(summary = "댓글 삭제 API", description = "댓글을 삭제합니다.")
+    @DeleteMapping("/api/comments/{commentId}")
+    public ApiResponse<Void> deleteComment(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long commentId
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        commentCommandService.deleteComment(commentId, loginId);
+        return ApiResponse.onSuccess("댓글 삭제 완료", null);
+    }
 }

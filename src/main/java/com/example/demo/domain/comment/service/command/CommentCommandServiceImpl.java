@@ -52,4 +52,15 @@ public class CommentCommandServiceImpl implements CommentCommandService {
         CommentConverter.updateComment(comment, dto);
     }
 
+    @Override
+    public void deleteComment(Long commentId, String loginId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COMMENT_NOT_FOUND));
+
+        if (!comment.getUser().getLoginId().equals(loginId)) {
+            throw new CustomException(CommentErrorCode.COMMENT_FORBIDDEN);
+        }
+
+        commentRepository.delete(comment);
+    }
 }
