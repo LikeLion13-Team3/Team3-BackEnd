@@ -19,4 +19,23 @@ public class PostResponseDto {
 
         @Schema(description = "작성 유저 이름", example = "홍길동")
         private String writer;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class PostSummaryResponseDto {
+
+        @Schema(description = "게시글 ID", example = "1")
+        private Long postId;
+
+        @Schema(description = "게시글 제목", example = "스터디 모집 글")
+        private String title;
+
+        @Schema(description = "작성자 이름", example = "홍길동")
+        private String writer;
+
+        @Schema(description = "작성일", example = "2025-07-03T10:15:30")
+        private LocalDateTime createdAt;
+    }
 }

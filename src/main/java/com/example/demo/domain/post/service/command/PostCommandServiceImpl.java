@@ -28,4 +28,29 @@ public class PostCommandServiceImpl implements PostCommandService {
         return postRepository.save(post);
     }
 
+
+    @Override
+    public void updatePost(Long postId, String loginId, PostRequestDto.PostUpdateRequestDto requestDto) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(PostErrorCode.POST_NOT_FOUND));
+
+        if (!post.getUser().getLoginId().equals(loginId)) {
+            throw new CustomException(PostErrorCode.POST_FORBIDDEN);
+        }
+
+        post.update(requestDto.getTitle(), requestDto.getContent());
+    }
+
+    @Override
+    @Transactional
+    public void deletePost(Long postId, String loginId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(PostErrorCode.POST_NOT_FOUND));
+
+        if (!post.getUser().getLoginId().equals(loginId)) {
+            throw new CustomException(PostErrorCode.POST_FORBIDDEN);
+        }
+
+        postRepository.delete(post);
+    }
 }
