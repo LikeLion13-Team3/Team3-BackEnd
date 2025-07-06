@@ -14,10 +14,6 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>("success", null, data);
-    }
-
     public static <T> ApiResponse<T> success(String message, T data) {
         return new ApiResponse<>("success", message, data);
     }
@@ -26,6 +22,9 @@ public class ApiResponse<T> {
         return new ApiResponse<>("error", message, null);
     }
 
+    public static <T> ApiResponse<T> fail(String message, T data) {
+        return new ApiResponse<>("fail", message, data);
+    }
     // getters & setters
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
