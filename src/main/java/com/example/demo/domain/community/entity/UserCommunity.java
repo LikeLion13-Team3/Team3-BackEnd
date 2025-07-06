@@ -1,16 +1,9 @@
 package com.example.demo.domain.community.entity;
 
-import com.example.demo.domain.exam.entity.Exam;
-import com.example.demo.domain.mission.entity.Mission;
-import com.example.demo.domain.post.entity.Post;
 import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.BaseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +14,7 @@ public class UserCommunity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_community_id")
     private Long userCommunityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
