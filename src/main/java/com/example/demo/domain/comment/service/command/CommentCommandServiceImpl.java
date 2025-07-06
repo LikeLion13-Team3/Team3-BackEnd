@@ -39,4 +39,17 @@ public class CommentCommandServiceImpl implements CommentCommandService {
 
         commentRepository.save(comment);
     }
+
+    @Override
+    public void updateComment(Long commentId, String loginId, CommentRequestDto.CommentUpdateRequestDto dto) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COMMENT_NOT_FOUND));
+
+        if (!comment.getUser().getLoginId().equals(loginId)) {
+            throw new CustomException(CommentErrorCode.COMMENT_FORBIDDEN);
+        }
+
+        CommentConverter.updateComment(comment, dto);
+    }
+
 }

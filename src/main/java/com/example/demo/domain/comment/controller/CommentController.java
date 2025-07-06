@@ -32,6 +32,20 @@ public class CommentController {
         String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
         commentCommandService.createComment(postId, loginId, requestDto);
         return ApiResponse.onSuccess("댓글 작성 완료", null);
+    }
+
+    @Operation(summary = "댓글 수정 API", description = "댓글을 수정합니다.")
+    @PatchMapping("/api/comments/{commentId}")
+    public ApiResponse<Void> updateComment(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long commentId,
+            @RequestBody CommentRequestDto.CommentUpdateRequestDto dto
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        commentCommandService.updateComment(commentId, loginId, dto);
+        return ApiResponse.onSuccess("댓글이 수정되었습니다", null);
+    }
+
     @Operation(summary = "댓글 목록 조회 API", description = "댓글 목록을 조회합니다.")
     @GetMapping("/api/posts/{postId}/comments")
     public ApiResponse<List<CommentResponseDto.CommentSimpleResponseDto>> getCommentsByPostId(@PathVariable Long postId) {
