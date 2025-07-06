@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.reactive.config.CorsRegistry;
 
 @Configuration
 public class SecurityConfig {
@@ -21,6 +22,7 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/api/users/login",
                                 "/api/users/signup",
+                                "/api/users/me",
                                 "/api/notifications/**"
                         ).permitAll()
                         .anyRequest().authenticated()
@@ -30,6 +32,13 @@ public class SecurityConfig {
 
         return http.build();
 
+    }
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // 모든 API 경로 허용
+                .allowedOrigins("*") // 모든 Origin 허용 (개발 시 한정)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(false);
     }
 }
 

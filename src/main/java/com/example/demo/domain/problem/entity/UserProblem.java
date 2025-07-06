@@ -6,10 +6,12 @@ import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Builder
 public class UserProblem {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
