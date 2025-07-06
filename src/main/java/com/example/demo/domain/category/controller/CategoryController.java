@@ -21,7 +21,7 @@ public class CategoryController {
     private final CategoryQueryService categoryQueryService;
 
     @GetMapping
-    @Operation(summary = "전체 카테고리 조회")
+    @Operation(summary = "전체 카테고리 목록 조회")
     public ResponseEntity<List<CategoryResponseDTO.CategoryResDTO>> getAllCategories() {
         return ResponseEntity.ok(categoryQueryService.getAllCategories());
     }
