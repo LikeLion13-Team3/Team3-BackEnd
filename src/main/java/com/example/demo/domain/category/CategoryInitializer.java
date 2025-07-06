@@ -5,10 +5,12 @@ import com.example.demo.domain.category.entity.ExamCategory;
 import com.example.demo.domain.category.repository.CategoryRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryInitializer {
 
     private final CategoryRepository categoryRepository;
@@ -24,7 +26,6 @@ public class CategoryInitializer {
                             .build()
             );
         }
-
-        System.out.println("카테고리 초기화 완료 ✅");
+        log.info("카테고리 초기화 완료");
     }
 }
