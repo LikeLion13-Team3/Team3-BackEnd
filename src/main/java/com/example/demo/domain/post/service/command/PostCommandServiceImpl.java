@@ -1,5 +1,23 @@
 package com.example.demo.domain.post.service.command;
 
+import com.example.demo.domain.community.entity.Community;
+import com.example.demo.domain.community.repository.CommunityRepository;
+import com.example.demo.domain.community.repository.UserCommunityRepository;
+import com.example.demo.domain.post.converter.PostConverter;
+import com.example.demo.domain.post.dto.PostRequestDto.PostRequestDto;
+import com.example.demo.domain.post.entity.Post;
+import com.example.demo.domain.post.exception.PostErrorCode;
+import com.example.demo.domain.post.repository.PostRepository;
+import com.example.demo.domain.user.entity.User;
+import com.example.demo.domain.user.repository.UserRepository;
+import com.example.demo.global.apiPayload.exception.CustomException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
 public class PostCommandServiceImpl implements PostCommandService {
     private final UserRepository userRepository;
     private final CommunityRepository communityRepository;

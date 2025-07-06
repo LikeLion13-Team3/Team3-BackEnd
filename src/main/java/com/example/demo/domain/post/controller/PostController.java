@@ -53,4 +53,14 @@ public class PostController {
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글 목록입니다.", page));
     }
 
+    @PatchMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponse<String>> updatePost(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long postId,
+            @RequestBody PostRequestDto.PostUpdateRequestDto requestDto
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        postCommandService.updatePost(postId, loginId, requestDto);
+        return ResponseEntity.ok(new ApiResponse<>("success", "게시글이 수정되었습니다.", null));
+    }
 }
