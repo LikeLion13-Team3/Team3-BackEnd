@@ -46,4 +46,15 @@ public class CommunityController {
         List<CommunityResponseDto.CommunitySimpleResponseDto> result = CommunityConverter.toDtoList(userCommunities);
         return ResponseEntity.ok(new ApiResponse<>("success", "참여한 커뮤니티 목록입니다.", result));
     }
+
+    @Operation(summary = "커뮤니티 탈퇴 API", description = "커뮤니티에서 탈퇴합니다.")
+    @DeleteMapping("/{communityId}/leave")
+    public ResponseEntity<ApiResponse<String>> leaveCommunity(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long communityId
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        commandService.leaveCommunity(loginId, communityId);
+        return ResponseEntity.ok(new ApiResponse<>("success", "커뮤니티에서 탈퇴했습니다.", null));
+    }
 }
