@@ -1,5 +1,9 @@
 package com.example.demo.domain.post.dto.PostRequestDto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 public class PostRequestDto {
 
     @Getter

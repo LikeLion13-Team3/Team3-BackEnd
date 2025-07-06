@@ -63,4 +63,14 @@ public class PostController {
         postCommandService.updatePost(postId, loginId, requestDto);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글이 수정되었습니다.", null));
     }
+
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponse<Void>> deletePost(
+            @RequestHeader("Authorization") String token,
+            @PathVariable Long postId
+    ) {
+        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+        postCommandService.deletePost(postId, loginId);
+        return ResponseEntity.ok(new ApiResponse<>("success", "게시글 삭제 완료", null));
+    }
 }
