@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.demo.domain.comment.entity.Comment;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -20,6 +21,6 @@ public class CommentQueryServiceImpl implements CommentQueryService {
         List<Comment> comments = commentRepository.findAllByPostId(postId);
         return comments.stream()
                 .map(CommentConverter::toSimpleResponseDto)
-                .toList();
+                .collect(Collectors.toList());
     }
 }

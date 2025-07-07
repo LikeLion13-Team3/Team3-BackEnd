@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,12 +39,12 @@ public class UserController {
         return ResponseEntity.ok(new UserResponseDto.CommonResponse("success", "로그인 성공", loginResult));
     }
 
-    @Operation(summary = "프로필 수정", description = "유저가 프로필 수정을 수행합니다.")
     @PatchMapping("/me")
     public ResponseEntity<UserResponseDto.CommonResponse> updateProfile(
-            @RequestHeader("Authorization") String token,
             @RequestBody UserRequestDto.UpdateProfile request) {
-        String loginId = jwtUtil.getLoginId(token.replace("Bearer ", ""));
+
+        String loginId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         userCommandService.updateProfile(loginId, request);
         return ResponseEntity.ok(new UserResponseDto.CommonResponse("success", "내 정보가 수정되었습니다.", null));
     }
