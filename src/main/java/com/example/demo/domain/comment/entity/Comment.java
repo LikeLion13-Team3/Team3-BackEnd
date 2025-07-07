@@ -28,4 +28,9 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    // 댓글 수정 메서드
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
