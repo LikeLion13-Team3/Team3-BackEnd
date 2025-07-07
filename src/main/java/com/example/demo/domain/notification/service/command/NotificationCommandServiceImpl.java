@@ -3,7 +3,7 @@ package com.example.demo.domain.notification.service.command;
 import com.example.demo.domain.notification.entity.Notification;
 import com.example.demo.domain.notification.repository.NotificationRepository;
 import com.example.demo.domain.user.entity.User;
-import com.example.demo.global.exception.NotFoundException;
+import com.example.demo.global.apiPayload.exception.NotFoundException;
 import com.example.demo.global.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
