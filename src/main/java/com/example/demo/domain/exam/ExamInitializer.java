@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ExamInitializer {
 
     private final ExamRepository examRepository;
@@ -47,10 +49,10 @@ public class ExamInitializer {
                     .toList();
 
             examRepository.saveAll(exams);
-            System.out.println("자격증 시험 50개 초기화 완료");
+            log.info("자격증 시험 50개 초기화 완료");
 
         } catch (Exception e) {
-            System.err.println("시험 데이터 초기화 실패: " + e.getMessage());
+            log.info("시험 데이터 초기화 실패: " + e.getMessage());
         }
     }
 }
