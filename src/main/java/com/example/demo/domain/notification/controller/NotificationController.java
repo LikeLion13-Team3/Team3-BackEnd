@@ -21,16 +21,47 @@ public class NotificationController {
 
     @GetMapping
     public ApiResponse<List<NotificationResponseDto>> getNotifications(@RequestHeader("Authorization") String bearerToken) {
-        String loginId = jwtUtil.getLoginId(bearerToken);
-        List<NotificationResponseDto> notifications = notificationQueryService.getNotifications(loginId);
-        return ApiResponse.success("알림 목록 조회 성공", notifications);
+        try {
+            System.out.println("[알림 목록 조회] 컨트롤러 도달");
+
+            if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+                throw new RuntimeException("잘못된 토큰 형식");
+            }
+
+            String token = bearerToken.substring(7); // "Bearer " 제거
+            String loginId = jwtUtil.getLoginId(token); // 순수 토큰 전달
+            System.out.println("loginId: " + loginId);
+
+            List<NotificationResponseDto> notifications = notificationQueryService.getNotifications(loginId);
+            return ApiResponse.success("알림 목록 조회 성공", notifications);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.error("서버 내부 오류 발생");
+        }
     }
+
+
 
     @PostMapping("/{notificationId}/read")
     public ApiResponse<Void> readNotification(@RequestHeader("Authorization") String bearerToken,
                                               @PathVariable Long notificationId) {
-        String loginId = jwtUtil.getLoginId(bearerToken);
-        notificationCommandService.readNotification(loginId, notificationId);
-        return ApiResponse.success("알림을 읽음 처리했습니다.", null);
+        try {
+            System.out.println("[readNotification] 호출됨: notificationId = " + notificationId);
+
+            if (bearerToken == null || !bearerToken.startsWith("Bearer ")) {
+                throw new RuntimeException("잘못된 토큰 형식");
+            }
+            String token = bearerToken.substring(7);
+            String loginId = jwtUtil.getLoginId(token);
+            System.out.println("loginId: " + loginId);
+
+            notificationCommandService.readNotification(loginId, notificationId);
+
+            return ApiResponse.success("알림을 읽음 처리했습니다.", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.error("서버 내부 오류 발생");
+        }
     }
+
 }
