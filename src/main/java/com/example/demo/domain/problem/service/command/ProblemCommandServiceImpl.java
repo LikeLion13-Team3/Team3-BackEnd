@@ -9,8 +9,9 @@ import com.example.demo.domain.problem.dto.openAi.ChatResponse;
 import com.example.demo.domain.problem.entity.Problem;
 import com.example.demo.domain.problem.entity.UserProblem;
 import com.example.demo.domain.problem.repository.ProblemRepository;
+import com.example.demo.domain.problem.repository.UserProblemRepository;
 import com.example.demo.domain.user.entity.User;
-import com.example.demo.global.dto.ApiResponse;
+import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.util.UserUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,32 @@ public class ProblemCommandServiceImpl implements ProblemCommandService {
     private final ProblemRepository problemRepository;
     private final UserUtil userUtil;
     private final WebClient webClient;
+
+    private final UserProblemRepository userProblemRepository;
+
+
+    @Override
+    public ApiResponse<List<ProblemResponseDto.WrongProblemResponse>> getWrongProblems() {
+        User user = userUtil.getLoginUser();
+
+        if (user == null) {
+            System.out.println("[DEBUG] 로그인된 사용자 없음 - user is null");
+            throw new RuntimeException("로그인된 사용자가 없습니다.");
+        }
+
+        System.out.println("[DEBUG] 로그인된 사용자 ID: " + user.getId());
+        System.out.println("[DEBUG] 로그인된 사용자 이름: " + user.getUsername());
+
+
+        List<UserProblem> wrongProblems = userProblemRepository.findWrongProblemsByUser(user);
+
+        List<ProblemResponseDto.WrongProblemResponse> responseList = wrongProblems.stream()
+                .map(ProblemConverter::toWrongProblemResponse)
+                .toList();        // ...
+
+        return ApiResponse.onSuccess("틀린 문제 목록입니다.", responseList);
+    }
+
 
     @Override
     public ApiResponse<ProblemResponseDto.ProblemResponse> getRandomProblem(Long communityId) {
@@ -53,7 +80,7 @@ public class ProblemCommandServiceImpl implements ProblemCommandService {
         // content는 JSON 텍스트로 가정. 직접 파싱 필요
         ProblemResponseDto.ProblemResponse problemResponse = parseProblemResponseFromJson(content);
 
-        return ApiResponse.success("문제 풀이 시작", problemResponse);
+        return ApiResponse.onSuccess("문제 풀이 시작", problemResponse);
     }
 
 
@@ -78,27 +105,11 @@ public class ProblemCommandServiceImpl implements ProblemCommandService {
         problemRepository.save(problem); // cascade 설정이 되어 있다면 userProblem도 함께 저장됨
 
         return isCorrect ?
-                ApiResponse.success("정답입니다!", ProblemConverter.toSubmitResponse(true, problem.getSolution(), score)) :
-                ApiResponse.fail("오답입니다", ProblemConverter.toSubmitResponse(false, problem.getSolution(), score));
+                ApiResponse.onFailure("정답입니다!", ProblemConverter.toSubmitResponse(true, problem.getSolution(), score)) :
+                ApiResponse.onFailure("오답입니다", ProblemConverter.toSubmitResponse(false, problem.getSolution(), score));
     }
 
-    @Override
-    public ApiResponse<List<ProblemResponseDto.WrongProblemResponse>> getWrongProblems() {
-        User user = userUtil.getLoginUser();
-        List<Problem> allProblems = problemRepository.findAll();
 
-        List<UserProblem> wrongProblems = allProblems.stream()
-                .flatMap(p -> p.getUserProblems().stream())
-                .filter(up -> up.getUser().getId().equals(user.getId()) && !up.isCorrect())
-                .toList();
-
-        List<ProblemResponseDto.WrongProblemResponse> responseList = wrongProblems.stream()
-                .map(ProblemConverter::toWrongProblemResponse)
-                .toList();
-
-
-        return ApiResponse.success("틀린 문제 목록입니다.", responseList);
-    }
 
     private ProblemResponseDto.ProblemResponse parseProblemResponseFromJson(String json) {
         try {

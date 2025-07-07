@@ -3,7 +3,7 @@ package com.example.demo.domain.notification.controller;
 import com.example.demo.domain.notification.dto.NotificationResponseDto.NotificationResponseDto;
 import com.example.demo.domain.notification.service.command.NotificationCommandService;
 import com.example.demo.domain.notification.service.query.NotificationQueryService;
-import com.example.demo.global.dto.ApiResponse;
+import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class NotificationController {
             System.out.println("loginId: " + loginId);
 
             List<NotificationResponseDto> notifications = notificationQueryService.getNotifications(loginId);
-            return ApiResponse.success("알림 목록 조회 성공", notifications);
+            return ApiResponse.onSuccess("알림 목록 조회 성공", notifications);
         } catch (Exception e) {
             e.printStackTrace();
             return ApiResponse.error("서버 내부 오류 발생");
@@ -57,7 +57,7 @@ public class NotificationController {
 
             notificationCommandService.readNotification(loginId, notificationId);
 
-            return ApiResponse.success("알림을 읽음 처리했습니다.", null);
+            return ApiResponse.onSuccess("알림을 읽음 처리했습니다.", null);
         } catch (Exception e) {
             e.printStackTrace();
             return ApiResponse.error("서버 내부 오류 발생");

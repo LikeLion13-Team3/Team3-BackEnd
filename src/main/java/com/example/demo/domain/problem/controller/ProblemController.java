@@ -4,7 +4,7 @@ package com.example.demo.domain.problem.controller;
 import com.example.demo.domain.problem.dto.ProblemRequestDto.ProblemRequestDto;
 import com.example.demo.domain.problem.dto.ProblemResponseDto.ProblemResponseDto;
 import com.example.demo.domain.problem.service.command.ProblemCommandServiceImpl;
-import com.example.demo.global.dto.ApiResponse;
+import com.example.demo.global.apiPayload.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

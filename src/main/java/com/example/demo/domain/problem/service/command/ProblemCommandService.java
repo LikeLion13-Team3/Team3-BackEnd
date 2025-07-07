@@ -3,7 +3,7 @@ package com.example.demo.domain.problem.service.command;
 
 import com.example.demo.domain.problem.dto.ProblemRequestDto.ProblemRequestDto;
 import com.example.demo.domain.problem.dto.ProblemResponseDto.ProblemResponseDto;
-import com.example.demo.global.dto.ApiResponse;
+import com.example.demo.global.apiPayload.ApiResponse;
 
 import java.util.List;
 
