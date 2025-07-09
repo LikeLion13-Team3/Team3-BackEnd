@@ -1,17 +1,28 @@
 package com.example.demo.global.config;
 
+import com.example.demo.global.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-public class SecurityConfig {
+@RequiredArgsConstructor
+public class SecurityConfig implements WebMvcConfigurer {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // CSRF 비활성화 (Swagger 편의)
+                .cors(withDefaults())
+                .cors(cors -> cors.configure(http))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/v3/api-docs/**",
@@ -22,32 +33,16 @@ public class SecurityConfig {
                                 "/api/users/login",
                                 "/api/users/{loginId}",
                                 "/api/users/signup",
-                                "/api/users/me",
-                                "/api/notifications/**",
-                                "/api/users/me/liked-posts",
-                                "/api/communities/{communityId}/missions",
-                                "/api/communities/{communityId}/missions/problem",
-                                "/api/problem/{problemId}/submit",
-                                "/api/users/me/missions/wrong-questions",
-                                "/api/categories",
-                                "/api/communities/{examId}/join",
-                                "/api/communities/users/me/communities",
-                                "/api/communities/{communityId}/leave",
-                                "/api/categories/{categoryId}/exams"
-
-
-
-
-
-
-                                ).permitAll()
+                                "/api/communities/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable())  // 기본 로그인 폼 제거
-                .httpBasic(httpBasic -> httpBasic.disable()); // 기본 인증 제거
+                .formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
+
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
     }
 }
 
