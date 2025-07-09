@@ -5,6 +5,8 @@ import com.example.demo.domain.notification.service.command.NotificationCommandS
 import com.example.demo.domain.notification.service.query.NotificationQueryService;
 import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.util.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/notifications")
 @RequiredArgsConstructor
+@Tag(name = "알람", description = "알람 관련 API")
 public class NotificationController {
 
     private final NotificationQueryService notificationQueryService;
@@ -20,6 +23,7 @@ public class NotificationController {
     private final JwtUtil jwtUtil;
 
     @GetMapping
+    @Operation(summary = "알람 목록 조회 API", description = "알람 목록을 조회합니다.")
     public ApiResponse<List<NotificationResponseDto>> getNotifications(@RequestHeader("Authorization") String bearerToken) {
         try {
             System.out.println("[알림 목록 조회] 컨트롤러 도달");
@@ -40,9 +44,8 @@ public class NotificationController {
         }
     }
 
-
-
     @PostMapping("/{notificationId}/read")
+    @Operation(summary = "알람 읽음 처리 API", description = "알람 읽음 처리합니다.")
     public ApiResponse<Void> readNotification(@RequestHeader("Authorization") String bearerToken,
                                               @PathVariable Long notificationId) {
         try {

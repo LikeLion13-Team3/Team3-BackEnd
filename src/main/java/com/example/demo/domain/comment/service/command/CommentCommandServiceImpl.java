@@ -26,10 +26,10 @@ public class CommentCommandServiceImpl implements CommentCommandService {
     @Override
     public void createComment(Long postId, String loginId, CommentRequestDto.CommentCreateRequestDto requestDto) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new CustomException(CommentErrorCode.POST_NOT_FOUND));
 
         User user = userRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CustomException(CommentErrorCode.USER_NOT_FOUND));
 
         Comment comment = Comment.builder()
                 .content(requestDto.getContent())
