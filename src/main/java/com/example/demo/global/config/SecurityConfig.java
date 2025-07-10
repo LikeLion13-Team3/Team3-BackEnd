@@ -33,7 +33,18 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/api/users/login",
                                 "/api/users/{loginId}",
                                 "/api/users/signup",
-                                "/api/communities/**"
+                                "/api/users/me",
+                                "/api/notifications/**",
+                                "/api/users/me/liked-posts",
+                                "/api/communities/{communityId}/missions",
+                                "/api/communities/{communityId}/missions/problem",
+                                "/api/problem/{problemId}/submit",
+                                "/api/users/me/missions/wrong-questions",
+                                "/api/categories",
+                                "/api/communities/{examId}/join",
+                                "/api/communities/users/me/communities",
+                                "/api/communities/{communityId}/leave",
+                                "/api/categories/{categoryId}/exams"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

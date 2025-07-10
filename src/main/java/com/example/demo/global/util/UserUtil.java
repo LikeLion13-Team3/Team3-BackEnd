@@ -29,15 +29,13 @@ public class UserUtil {
         System.out.println("isAuthenticated: " + authentication.isAuthenticated());
         Object principal = authentication.getPrincipal();
         System.out.println("principal: " + principal);
-
-        if (principal instanceof String loginId) {
+        if (principal instanceof UserDetails userDetails) {
+            // UserDetails의 getUsername() 메서드를 사용하여 로그인 ID를 가져옴 (이것이 loginId)
+            String loginId = userDetails.getUsername();
             return userRepository.findByLoginId(loginId)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found: "));
         }
+
         throw new UsernameNotFoundException("로그인한 사용자를 찾을 수 없습니다.");
     }
-
-
-
-
 }
