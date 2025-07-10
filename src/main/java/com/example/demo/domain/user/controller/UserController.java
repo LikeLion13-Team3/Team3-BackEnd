@@ -41,6 +41,7 @@ public class UserController {
         return ResponseEntity.ok(new UserResponseDto.CommonResponse("success", "로그인 성공", loginResult));
     }
 
+    @Operation(summary = "개인정보 수정", description = "유저의 개인정보를 수정합니다.")
     @PatchMapping("/me")
     public ResponseEntity<UserResponseDto.CommonResponse> updateProfile(
             @RequestBody UserRequestDto.UpdateProfile request) {
