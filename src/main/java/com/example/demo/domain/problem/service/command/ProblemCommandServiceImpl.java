@@ -141,6 +141,9 @@ public class ProblemCommandServiceImpl implements ProblemCommandService {
         userProblem.setSubmittedAnswer(request.getSelectedAnswer());
         userProblem.setCorrect(isCorrect);
 
+        userProblem.setCommunity(problem.getMission().getCommunity());
+        userProblemRepository.save(userProblem);
+
         problem.getUserProblems().add(userProblem);
         problemRepository.save(problem);
 
