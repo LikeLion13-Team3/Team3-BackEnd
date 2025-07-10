@@ -18,4 +18,6 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
     @Query("SELECT COUNT(up) FROM UserProblem up WHERE up.user = :user AND up.problem.mission.community.id = :communityId")
     int countUserSolvedProblemsInCommunity(@Param("user") User user, @Param("communityId") Long communityId);
+
+    List<Problem> findByMission_CommunityId(Long communityId);
 }
