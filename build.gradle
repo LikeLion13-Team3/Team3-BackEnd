@@ -63,6 +63,9 @@ dependencies {
 	// JSON 파싱용
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+	runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.109.Final:osx-aarch_64"
+
+
 
 }
 

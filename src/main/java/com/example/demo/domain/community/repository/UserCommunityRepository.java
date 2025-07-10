@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface UserCommunityRepository extends JpaRepository<UserCommunity, Long> {
     boolean existsByUserAndCommunity(User user, Community community);
     Optional<UserCommunity> findByUserIdAndCommunityId(Long userId, Long communityId);
+    int countByCommunityId(Long communityId);
+    boolean existsByUserIdAndCommunityId(Long id, Long communityId);
 }

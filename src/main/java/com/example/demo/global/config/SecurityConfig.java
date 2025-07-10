@@ -7,8 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults())
                 .cors(cors -> cors.configure(http))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -31,7 +33,18 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 "/api/users/login",
                                 "/api/users/{loginId}",
                                 "/api/users/signup",
-                                "/api/communities/**"
+                                "/api/users/me",
+                                "/api/notifications/**",
+                                "/api/users/me/liked-posts",
+                                "/api/communities/{communityId}/missions",
+                                "/api/communities/{communityId}/missions/problem",
+                                "/api/problem/{problemId}/submit",
+                                "/api/users/me/missions/wrong-questions",
+                                "/api/categories",
+                                "/api/communities/{examId}/join",
+                                "/api/communities/users/me/communities",
+                                "/api/communities/{communityId}/leave",
+                                "/api/categories/{categoryId}/exams"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

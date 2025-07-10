@@ -22,7 +22,7 @@ public class ExamController {
     private final ExamQueryService examQueryService;
 
     @GetMapping("/api/categories/{categoryId}/exams")
-    @Operation(summary = "특정 카테고리의 시험 전체 조회")
+    @Operation(summary = "특정 카테고리의 시험 전체 조회 API", description = "특정 카테고리의 시험 전체 조회합니다.")
     public ResponseEntity<List<ExamResponseDTO.ExamResDTO>> getExamsByCategory(@PathVariable Long categoryId) {
         List<ExamResponseDTO.ExamResDTO> exams = examQueryService.getExamsByCategoryId(categoryId);
         return ResponseEntity.ok(exams);
