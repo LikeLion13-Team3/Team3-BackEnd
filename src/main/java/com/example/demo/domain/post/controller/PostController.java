@@ -7,10 +7,8 @@ import com.example.demo.domain.post.dto.PostResponseDto.PostResponseDto;
 import com.example.demo.domain.post.entity.Post;
 import com.example.demo.domain.post.service.command.PostCommandService;
 import com.example.demo.domain.post.service.query.PostQueryService;
-import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.util.JwtUtil;
-import com.example.demo.global.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostCommandService postCommandService;
     private final PostQueryService postQueryService;
-    private final UserUtil userUtil;
 
     @Operation(summary = "게시글 작성 API", description = "커뮤니티에 게시글을 작성합니다.")
     @PostMapping("/{communityId}/posts")
@@ -38,9 +35,7 @@ public class PostController {
             @RequestBody PostRequestDto.PostCreateRequestDto requestDto,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         Post post = postCommandService.createPost(communityId, loginId, requestDto);
         PostResponseDto.PostCreateResponseDto responseDto = PostConverter.toCreateResponseDto(post);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글이 작성되었습니다.", responseDto));
@@ -63,9 +58,7 @@ public class PostController {
             @RequestBody PostRequestDto.PostUpdateRequestDto requestDto,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         postCommandService.updatePost(postId, loginId, requestDto);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글이 수정되었습니다.", null));
     }
@@ -76,9 +69,7 @@ public class PostController {
             @PathVariable Long postId,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         postCommandService.deletePost(postId, loginId);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글 삭제 완료", null));
     }

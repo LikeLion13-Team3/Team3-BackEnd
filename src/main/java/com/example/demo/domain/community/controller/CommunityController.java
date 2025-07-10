@@ -5,10 +5,8 @@ import com.example.demo.domain.community.dto.ResponseDto.CommunityResponseDto;
 import com.example.demo.domain.community.entity.UserCommunity;
 import com.example.demo.domain.community.service.command.CommunityCommandService;
 import com.example.demo.domain.community.service.query.CommunityQueryService;
-import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.util.JwtUtil;
-import com.example.demo.global.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,6 @@ public class CommunityController {
 
     private final CommunityCommandService commandService;
     private final CommunityQueryService queryService;
-    private final UserUtil userUtil;
 
     @Operation(summary = "커뮤니티 참여", description = "커뮤니티에 참여합니다.")
     @PostMapping("/{examId}/join")
@@ -34,9 +31,7 @@ public class CommunityController {
             @PathVariable Long examId,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         Long userCommunityId = commandService.joinCommunity(examId, loginId);
         CommunityResponseDto.CommunityJoinResponseDto response = new CommunityResponseDto.CommunityJoinResponseDto(userCommunityId);
         return ResponseEntity.ok(new ApiResponse<>("success", "커뮤니티에 참여하였습니다.", response));
@@ -47,9 +42,7 @@ public class CommunityController {
     public ResponseEntity<ApiResponse<List<CommunityResponseDto.CommunitySimpleResponseDto>>> getMyCommunities(
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         List<UserCommunity> userCommunities = queryService.getMyCommunities(loginId);
         List<CommunityResponseDto.CommunitySimpleResponseDto> result = CommunityConverter.toDtoList(userCommunities);
         return ResponseEntity.ok(new ApiResponse<>("success", "참여한 커뮤니티 목록입니다.", result));
@@ -61,9 +54,7 @@ public class CommunityController {
             @PathVariable Long communityId,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         commandService.leaveCommunity(loginId, communityId);
         return ResponseEntity.ok(new ApiResponse<>("success", "커뮤니티에서 탈퇴했습니다.", null));
     }

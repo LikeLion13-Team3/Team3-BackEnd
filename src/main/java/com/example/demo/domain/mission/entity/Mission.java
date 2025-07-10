@@ -22,13 +22,12 @@ public class Mission extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 100)
-    private String title; // 미션 제목 (예: 00 자격증 시험의 미션)
+    private String title; // 미션 제목 ( ex> 00 자격증 시험의 미션 )
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "community_id", unique = true, nullable = false)
+    @JoinColumn(name = "community_id", unique = true)
     private Community community;
 
-    @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "mission")
     private List<Problem> problems = new ArrayList<>();
 }

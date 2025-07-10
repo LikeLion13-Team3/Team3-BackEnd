@@ -4,9 +4,8 @@ import com.example.demo.domain.comment.dto.CommentRequestDto.CommentRequestDto;
 import com.example.demo.domain.comment.dto.CommentResponseDto.CommentResponseDto;
 import com.example.demo.domain.comment.service.command.CommentCommandService;
 import com.example.demo.domain.comment.service.query.CommentQueryService;
-import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.apiPayload.ApiResponse;
-import com.example.demo.global.util.UserUtil;
+import com.example.demo.global.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ public class CommentController {
 
     private final CommentCommandService commentCommandService;
     private final CommentQueryService commentQueryService;
-    private final UserUtil userUtil;
 
     @Operation(summary = "댓글 작성 API", description = "게시글에 댓글을 작성합니다.")
     @PostMapping("/api/posts/{postId}/comments")
@@ -31,9 +29,7 @@ public class CommentController {
             @RequestBody CommentRequestDto.CommentCreateRequestDto requestDto,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         commentCommandService.createComment(postId, loginId, requestDto);
         return ApiResponse.onSuccess("댓글 작성 완료", null);
     }
@@ -45,9 +41,7 @@ public class CommentController {
             @RequestBody CommentRequestDto.CommentUpdateRequestDto dto,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         commentCommandService.updateComment(commentId, loginId, dto);
         return ApiResponse.onSuccess("댓글이 수정되었습니다", null);
     }
@@ -66,9 +60,7 @@ public class CommentController {
             @PathVariable Long commentId,
             Authentication authentication
     ) {
-        User currentUser = userUtil.getLoginUser();
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
+        String loginId = (String) authentication.getPrincipal();
         commentCommandService.deleteComment(commentId, loginId);
         return ApiResponse.onSuccess("댓글 삭제 완료", null);
     }

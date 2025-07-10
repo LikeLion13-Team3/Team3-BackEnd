@@ -3,15 +3,14 @@ package com.example.demo.domain.user.controller;
 
 import com.example.demo.domain.user.dto.UserRequestDto.UserRequestDto;
 import com.example.demo.domain.user.dto.UserResponseDto.UserResponseDto;
-import com.example.demo.domain.user.entity.User;
 import com.example.demo.domain.user.service.command.UserCommandService;
 import com.example.demo.domain.user.service.query.UserQueryService;
 import com.example.demo.global.util.JwtUtil;
-import com.example.demo.global.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +24,6 @@ public class UserController {
     private final UserCommandService userCommandService;
     private final UserQueryService userQueryService;
     private final JwtUtil jwtUtil;
-    private final UserUtil userUtil;
 
     @Operation(summary = "회원가입", description = "유저가 회원가입을 수행합니다.")
     @PostMapping("/signup")
@@ -44,9 +42,8 @@ public class UserController {
     @PatchMapping("/me")
     public ResponseEntity<UserResponseDto.CommonResponse> updateProfile(
             @RequestBody UserRequestDto.UpdateProfile request) {
-        User currentUser = userUtil.getLoginUser(); // UserUtil을 통해 현재 로그인한 User 엔티티 객체를 가져옵니다.
-        String loginId = currentUser.getLoginId();
-        //String loginId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String loginId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userCommandService.updateProfile(loginId, request);
         return ResponseEntity.ok(new UserResponseDto.CommonResponse("success", "내 정보가 수정되었습니다.", null));
