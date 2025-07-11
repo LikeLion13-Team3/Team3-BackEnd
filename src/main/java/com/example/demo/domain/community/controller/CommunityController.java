@@ -7,7 +7,6 @@ import com.example.demo.domain.community.service.command.CommunityCommandService
 import com.example.demo.domain.community.service.query.CommunityQueryService;
 import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.apiPayload.ApiResponse;
-import com.example.demo.global.util.JwtUtil;
 import com.example.demo.global.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +35,6 @@ public class CommunityController {
     ) {
         User currentUser = userUtil.getLoginUser();
         String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
         Long userCommunityId = commandService.joinCommunity(examId, loginId);
         CommunityResponseDto.CommunityJoinResponseDto response = new CommunityResponseDto.CommunityJoinResponseDto(userCommunityId);
         return ResponseEntity.ok(new ApiResponse<>("success", "커뮤니티에 참여하였습니다.", response));
@@ -49,7 +47,6 @@ public class CommunityController {
     ) {
         User currentUser = userUtil.getLoginUser();
         String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
         List<UserCommunity> userCommunities = queryService.getMyCommunities(loginId);
         List<CommunityResponseDto.CommunitySimpleResponseDto> result = CommunityConverter.toDtoList(userCommunities);
         return ResponseEntity.ok(new ApiResponse<>("success", "참여한 커뮤니티 목록입니다.", result));

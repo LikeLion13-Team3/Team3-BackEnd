@@ -1,7 +1,6 @@
 package com.example.demo.domain.post.service.query;
 
 
-import com.example.demo.domain.community.entity.Community;
 import com.example.demo.domain.community.repository.CommunityRepository;
 import com.example.demo.domain.post.converter.PostConverter;
 import com.example.demo.domain.post.dto.PostResponseDto.PostResponseDto;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +24,11 @@ public class PostQueryServiceImpl implements PostQueryService {
         return postPage.map(PostConverter::toSummaryResponseDto);
     }
 
-
-
+    @Override
+    public PostResponseDto.PostCreateResponseDto getCommunityPost(Long communityId, Long postId) {
+        Post post = postRepository.findByIdAndCommunityId(postId, communityId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않거나 커뮤니티에 속하지 않습니다."));
+        return PostConverter.toCreateResponseDto(post);
+    }
 
 }
