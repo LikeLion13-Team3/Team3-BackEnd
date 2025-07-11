@@ -22,7 +22,8 @@ public class UserRequestDto {
     @Getter
     public static class UpdateProfile {
         private String nickname;
-        private String profileImageUrl;
+        private String currentPassword;
+        private String newPassword;
     }
 }
 

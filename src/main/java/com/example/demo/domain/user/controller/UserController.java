@@ -47,9 +47,8 @@ public class UserController {
             @RequestBody UserRequestDto.UpdateProfile request) {
         User currentUser = userUtil.getLoginUser(); // UserUtil을 통해 현재 로그인한 User 엔티티 객체를 가져옵니다.
         String loginId = currentUser.getLoginId();
-        //String loginId = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        userCommandService.updateProfile(loginId, request);
+        userCommandService.updateProfile(loginId, request); // 닉네임 이름 바꾸는 로직 + 비밀번호 수정 로직 추가하기
         return ResponseEntity.ok(new UserResponseDto.CommonResponse("success", "내 정보가 수정되었습니다.", null));
     }
 

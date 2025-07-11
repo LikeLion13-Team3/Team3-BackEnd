@@ -30,10 +30,6 @@ public class User extends BaseEntity {
     private String password;
     private String username;
     private String nickname;
-
-    private String profileImageUrl;
-
-
     private Boolean isDeleted;
 
 
@@ -43,14 +39,12 @@ public class User extends BaseEntity {
         this.password = password;
         this.username = username;
         this.nickname = nickname;
-        this.profileImageUrl = null;
         this.isDeleted = false;
     }
 
-
-    public void updateProfile(String nickname, String imageUrl) {
+    // 닉네임 수정 로직
+    public void updateProfile(String nickname) {
         this.nickname = nickname;
-        this.profileImageUrl = imageUrl;
     }
 
     public void deleteUser() {
@@ -77,5 +71,9 @@ public class User extends BaseEntity {
 
     public String getLoginId() {
         return loginId;
+    }
+
+    public void updatePassword(String encodedNewPassword) {
+        this.password = encodedNewPassword;
     }
 }

@@ -46,13 +46,29 @@ public class UserCommandServiceImpl implements UserCommandService {
         // 4. DB 저장
         userRepository.save(user);
     }
+
+
     @Transactional
     @Override
     public void updateProfile(String loginId, UserRequestDto.UpdateProfile request) {
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자 정보가 없습니다."));
-        user.updateProfile(request.getNickname(), request.getProfileImageUrl());
+
+        // 닉네임 수정
+        user.updateProfile(request.getNickname());
+
+        // 비밀번호 변경 로직은 둘 다 입력되었을 때만 실행
+        if (request.getCurrentPassword() != null && request.getNewPassword() != null) {
+            if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+                throw new BusinessException(ErrorCode.INVALID_PASSWORD);
+            }
+
+            String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());
+            user.updatePassword(encodedNewPassword);
+        }
     }
+
+
     @Transactional
     @Override
     public void deleteUser(String loginId) {
