@@ -3,6 +3,7 @@ package com.example.demo.global.apiPayload.exception.handler;
 import com.example.demo.domain.user.exception.UsernameNotFoundException;
 import com.example.demo.global.apiPayload.ApiResponse;
 import com.example.demo.global.apiPayload.code.BaseErrorCode;
+import com.example.demo.global.apiPayload.code.BusinessException;
 import com.example.demo.global.apiPayload.code.GeneralErrorCode;
 import com.example.demo.global.apiPayload.exception.CustomException;
 import com.example.demo.global.apiPayload.exception.NotFoundException;
@@ -15,6 +16,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(BusinessException ex) {
+        log.warn("[BusinessException] {}: {}", ex.getErrorCode().getCode(), ex.getErrorCode().getMessage());
+        return ResponseEntity.status(ex.getErrorCode().getHttpStatus())
+                .body(ApiResponse.onFailure(ex.getErrorCode().getCode(), ex.getErrorCode().getMessage(), null));
+    }
     //애플리케이션에서 발생하는 커스텀 예외를 처리
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponse<Void>> handleCustomException(CustomException ex) {
