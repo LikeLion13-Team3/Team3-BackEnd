@@ -48,7 +48,6 @@ public class UserCommandServiceImpl implements UserCommandService {
     }
 
 
-    @Transactional
     @Override
     public void updateProfile(String loginId, UserRequestDto.UpdateProfile request) {
         User user = userRepository.findByLoginId(loginId)
@@ -57,16 +56,26 @@ public class UserCommandServiceImpl implements UserCommandService {
         // 닉네임 수정
         user.updateProfile(request.getNickname());
 
-        // 비밀번호 변경 로직은 둘 다 입력되었을 때만 실행
-        if (request.getCurrentPassword() != null && request.getNewPassword() != null) {
+        // 비밀번호 변경 로직
+        if (request.getCurrentPassword() != null || request.getNewPassword() != null) {
+            // 둘 중 하나라도 null이면 예외
+            if (request.getCurrentPassword() == null || request.getNewPassword() == null) {
+                throw new BusinessException(ErrorCode.PASSWORD_INPUT_REQUIRED); // 새로 정의하거나 기존 코드 사용
+            }
+
+            // 현재 비밀번호 확인
             if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
                 throw new BusinessException(ErrorCode.INVALID_PASSWORD);
             }
 
+            // 비밀번호 변경
             String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());
             user.updatePassword(encodedNewPassword);
         }
+
+        userRepository.save(user);
     }
+
 
 
     @Transactional
