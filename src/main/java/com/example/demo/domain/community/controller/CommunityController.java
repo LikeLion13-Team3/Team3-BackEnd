@@ -47,7 +47,6 @@ public class CommunityController {
     ) {
         User currentUser = userUtil.getLoginUser();
         String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
         List<UserCommunity> userCommunities = queryService.getMyCommunities(loginId);
         List<CommunityResponseDto.CommunitySimpleResponseDto> result = CommunityConverter.toDtoList(userCommunities);
         return ResponseEntity.ok(new ApiResponse<>("success", "참여한 커뮤니티 목록입니다.", result));

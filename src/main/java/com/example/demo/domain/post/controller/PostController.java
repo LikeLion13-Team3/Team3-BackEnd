@@ -9,7 +9,6 @@ import com.example.demo.domain.post.service.command.PostCommandService;
 import com.example.demo.domain.post.service.query.PostQueryService;
 import com.example.demo.domain.user.entity.User;
 import com.example.demo.global.apiPayload.ApiResponse;
-import com.example.demo.global.util.JwtUtil;
 import com.example.demo.global.util.UserUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,7 +39,6 @@ public class PostController {
     ) {
         User currentUser = userUtil.getLoginUser();
         String loginId = currentUser.getLoginId();
-        //String loginId = (String) authentication.getPrincipal();
         Post post = postCommandService.createPost(communityId, loginId, requestDto);
         PostResponseDto.PostCreateResponseDto responseDto = PostConverter.toCreateResponseDto(post);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글이 작성되었습니다.", responseDto));
@@ -54,6 +52,16 @@ public class PostController {
     ) {
         Page<PostResponseDto.PostSummaryResponseDto> page = postQueryService.getCommunityPosts(communityId, pageable);
         return ResponseEntity.ok(new ApiResponse<>("success", "게시글 목록입니다.", page));
+    }
+
+    @Operation(summary = "게시글 상세 조회 API", description = "커뮤니티 게시글을 상세 조회합니다.")
+    @GetMapping("/{communityId}/posts/{postId}")
+    public ResponseEntity<ApiResponse<PostResponseDto.PostCreateResponseDto>> getCommunityPost(
+            @PathVariable Long communityId,
+            @PathVariable Long postId
+    ) {
+        PostResponseDto.PostCreateResponseDto responseDto = postQueryService.getCommunityPost(communityId, postId);
+        return ResponseEntity.ok(new ApiResponse<>("success", "게시글 상세 조회 성공", responseDto));
     }
 
     @PatchMapping("/posts/{postId}")
