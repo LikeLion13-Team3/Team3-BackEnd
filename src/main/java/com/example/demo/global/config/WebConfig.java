@@ -15,6 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "https://tutti.kro.kr"
                 )
                 .allowedMethods("*")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(true);
+
     }
 }
