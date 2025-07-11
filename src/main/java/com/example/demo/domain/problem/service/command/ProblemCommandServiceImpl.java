@@ -148,8 +148,8 @@ public class ProblemCommandServiceImpl implements ProblemCommandService {
         problemRepository.save(problem);
 
         return isCorrect ?
-                ApiResponse.onFailure("정답입니다!", ProblemConverter.toSubmitResponse(true, problem.getSolution(), score)) :
-                ApiResponse.onFailure("오답입니다", ProblemConverter.toSubmitResponse(false, problem.getSolution(), score));
+                ApiResponse.onSuccess("정답입니다!", ProblemConverter.toSubmitResponse(true, problem.getSolution(),problem.getCorrectAnswer())) :
+                ApiResponse.onSuccess("오답입니다", ProblemConverter.toSubmitResponse(false, problem.getSolution(),problem.getCorrectAnswer()));
     }
 
     private ProblemForm parseProblemResponseFromJson(String json) {

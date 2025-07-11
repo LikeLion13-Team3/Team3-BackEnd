@@ -29,11 +29,11 @@ public class ProblemResponseDto  {
         @Schema(description = "정답 여부", example = "true")
         private boolean isCorrect;
 
+        @Schema(description = "정답", example = "productive")
+        private String correctAnswer;
+
         @Schema(description = "해설", example = "'productive'는 'efficient'의 가장 적절한 동의어입니다.")
         private String explanation;
-
-        @Schema(description = "현재 점수", example = "3")
-        private int currentScore;
     }
 
     @Data

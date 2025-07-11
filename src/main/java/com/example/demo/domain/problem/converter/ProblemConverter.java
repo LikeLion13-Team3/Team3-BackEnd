@@ -11,11 +11,11 @@ import java.util.List;
 
 public class ProblemConverter {
 
-    public static ProblemResponseDto.SubmitResponse toSubmitResponse(boolean isCorrect, String solution, int score) {
+    public static ProblemResponseDto.SubmitResponse toSubmitResponse(boolean isCorrect,String explanation,String correctAnswer) {
         return ProblemResponseDto.SubmitResponse.builder()
                 .isCorrect(isCorrect)
-                .explanation(solution)
-                .currentScore(score)
+                .correctAnswer(correctAnswer)
+                .explanation(explanation)
                 .build();
     }
 
