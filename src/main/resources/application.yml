@@ -22,6 +22,9 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
 
+server:
+  forward-headers-strategy: framework
+
 jwt:
   secret: ${JWT_SECRET}
 
