@@ -27,6 +27,11 @@ public class CommunityCommandServiceImpl implements CommunityCommandService {
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
 
+        int joinedCount = userCommunityRepository.countByUserId(user.getId());
+        if (joinedCount >= 3) { // 3개까지 허용
+            throw new IllegalStateException("최대 3개의 커뮤니티에만 참여할 수 있습니다.");
+        }
+
         Exam exam = examRepository.findById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 시험이 존재하지 않습니다."));
 
@@ -43,6 +48,8 @@ public class CommunityCommandServiceImpl implements CommunityCommandService {
                 .build();
 
         userCommunityRepository.save(userCommunity);
+
+
         return userCommunity.getUserCommunityId();
     }
 
