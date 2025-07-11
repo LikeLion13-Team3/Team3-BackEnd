@@ -11,12 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins(
-                        "http://127.0.0.1:5500",   // 로컬 개발용 (Live Server 등)
-                        "https://tutti.kro.kr"
+                        "http://127.0.0.1:5500",
+                        "https://tutti.kro.kr",
+                        "https://team3-front-end-7etj.vercel.app"
                 )
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true);
-
     }
 }
